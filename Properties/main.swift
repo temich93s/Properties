@@ -93,3 +93,23 @@ print(initialSquareCenter)
 
 square.center = Point(x: 15.0, y: 15.0)
 print(square.origin)
+
+
+//MARK: Сокращенный вариант объявления сеттера
+print("\n//Сокращенный вариант объявления сеттера")
+
+struct AlternativeRect {
+    var origin = Point()
+    var size = Size()
+    var center: Point {
+        get {
+            let centerX = origin.x + (size.width / 2)
+            let centerY = origin.y + (size.height / 2)
+            return Point(x: centerX, y: centerY)
+        }
+        set {
+            origin.x = newValue.x - (size.width / 2)
+            origin.y = newValue.y - (size.height / 2)
+        }
+    }
+}
