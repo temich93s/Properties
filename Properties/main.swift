@@ -23,3 +23,11 @@ print(rangeOfThreeItems.firstValue, rangeOfThreeItems.length)
 
 rangeOfThreeItems.firstValue = 6
 print(rangeOfThreeItems.firstValue, rangeOfThreeItems.length)
+
+
+//MARK: Свойства хранения постоянных экземпляров структуры
+print("\n//Свойства хранения постоянных экземпляров структуры")
+
+let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
+//rangeOfFourItems.firstValue = 6 //ERROR, так как let rangeOfFourItems
+print(rangeOfFourItems.firstValue, rangeOfFourItems.length)
