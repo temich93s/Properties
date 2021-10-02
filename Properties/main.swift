@@ -146,3 +146,21 @@ struct Cuboid {
 let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
 print(fourByFiveByTwo.volume)
 
+
+//MARK: Наблюдатели свойства
+print("\n//Наблюдатели свойства")
+
+class StepCounter {
+    var totalStep: Int = 0 {
+        willSet (newValue1) {
+            print("willSet: \(newValue1)")
+        }
+        didSet {
+            print("didSet: \(oldValue) ")
+        }
+    }
+}
+
+let stepCounter = StepCounter()
+stepCounter.totalStep = 10
+stepCounter.totalStep = 40
