@@ -164,3 +164,10 @@ class StepCounter {
 let stepCounter = StepCounter()
 stepCounter.totalStep = 10
 stepCounter.totalStep = 40
+
+//Если передать свойство, имеющее наблюдателей, в функцию в качестве сквозного параметра, то наблюдатели willSet и didSet всегда вызываются
+func someFunction(numberA: inout Int) {
+    print("numberA = \(numberA * 10)")
+}
+
+someFunction(numberA: &stepCounter.totalStep)
