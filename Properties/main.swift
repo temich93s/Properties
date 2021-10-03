@@ -403,3 +403,52 @@ class SomeClass {
     }
 }
 
+
+//MARK: Запросы и установка свойств типа
+print("\n//Запросы и установка свойств типа")
+
+print(SomeStructure1.storedTypeProperty)
+// Выведет "Some value."
+
+SomeStructure1.storedTypeProperty = "Another value."
+print(SomeStructure1.storedTypeProperty)
+// Выведет "Another value."
+
+print(SomeEnumeration.computedTypeProperty)
+// Выведет "6"
+
+print(SomeClass.computedTypeProperty)
+// Выведет "27"
+
+
+struct AudioChannel {
+    static let thresholdLevel = 10
+    static var maxInputLevelForAllChannels = 0
+    var currentLevel: Int = 0 {
+        didSet {
+            if currentLevel > AudioChannel.thresholdLevel {
+                // ограничиваем уровень звука максимально допустимым уровнем
+                currentLevel = AudioChannel.thresholdLevel
+            }
+            if currentLevel > AudioChannel.maxInputLevelForAllChannels {
+                // храним значение в качестве максимального уровня
+                AudioChannel.maxInputLevelForAllChannels = currentLevel
+            }
+        }
+    }
+}
+
+var leftChannel = AudioChannel()
+var rightChannel = AudioChannel()
+
+leftChannel.currentLevel = 7
+print(leftChannel.currentLevel)
+// Выведет "7"
+print(AudioChannel.maxInputLevelForAllChannels)
+// Выведет "7"
+
+rightChannel.currentLevel = 11
+print(rightChannel.currentLevel)
+// Выведет "10"
+print(AudioChannel.maxInputLevelForAllChannels)
+// Выведет "10"
