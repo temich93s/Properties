@@ -378,3 +378,28 @@ some1.c = 0
 print(some1.$a, some1.$b, some1.$c, some1.$d)
 
 
+//MARK: Синтаксис свойства типа
+print("\n//Синтаксис свойства типа")
+
+struct SomeStructure1 {
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+        return 1
+    }
+}
+enum SomeEnumeration {
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+        return 6
+    }
+}
+class SomeClass {
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+        return 27
+    }
+    class var overridableComputedTypeProperty: Int {
+        return 107
+    }
+}
+
