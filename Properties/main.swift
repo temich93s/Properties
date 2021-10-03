@@ -214,9 +214,9 @@ rectangle.height = 24
 print(rectangle.height)
 // Выведет "12"
 
+
 //MARK: Установка исходных значений для оберток свойств
 print("\n//Установка исходных значений для оберток свойств")
-
 
 @propertyWrapper
 struct SmallNumber {
@@ -286,3 +286,95 @@ print(mixedRectangle.height)
 mixedRectangle.height = 20
 print(mixedRectangle.height)
 // Выведет "12"
+
+
+//MARK: Проецирование значения из обертки свойства
+print("\n//Проецирование значения из обертки свойства")
+
+@propertyWrapper
+struct SmallNumber1 {
+    private var number = 0
+    var projectedValue = false
+    var wrappedValue: Int {
+        get { return number }
+        set {
+            if newValue > 12 {
+                number = 12
+                projectedValue = true
+            } else {
+                number = newValue
+                projectedValue = false
+            }
+        }
+    }
+}
+struct SomeStructure {
+    @SmallNumber1 var someNumber: Int
+}
+var someStructure = SomeStructure()
+
+someStructure.someNumber = 4
+print(someStructure.$someNumber)
+// Выведет "false"
+
+someStructure.someNumber = 55
+print(someStructure.$someNumber)
+// Выведет "true"
+
+//----
+
+@propertyWrapper struct someStruct1 {
+    private var minimum: Int
+    private var number: Int
+    var projectedValue: String = "_"
+    
+    var wrappedValue: Int {
+        get { return number }
+        set {
+            if newValue >= minimum {
+                number = newValue
+                projectedValue = "newValue"
+            } else {
+                number = minimum
+                projectedValue = "minimum"
+            }
+        }
+    }
+    
+    init() {
+        minimum = 1
+        number = 1
+    }
+    
+    init(wrappedValue: Int) {
+        minimum = 1
+        number = max(wrappedValue, minimum)
+    }
+    
+    init(wrappedValue: Int, minimum: Int) {
+        self.minimum = minimum
+        number = max(wrappedValue, minimum)
+    }
+}
+
+struct someStruct2 {
+    @someStruct1 var a: Int
+    @someStruct1 var b: Int = 2
+    @someStruct1(wrappedValue: 2, minimum: 5) var c: Int
+    @someStruct1(wrappedValue: 2) var d: Int
+}
+
+var some1 = someStruct2()
+
+print(some1.a, some1.b, some1.c, some1.d)
+
+some1.a = 10
+print(some1.a, some1.b, some1.c, some1.d)
+
+some1.b = 10
+print(some1.a, some1.b, some1.c, some1.d)
+
+some1.c = 0
+print(some1.$a, some1.$b, some1.$c, some1.$d)
+
+
